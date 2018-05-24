@@ -1,0 +1,32 @@
+#map{
+    height: 400px;
+
+}
+#table{
+    text-align: center;
+}
+table{
+    margin: 0 auto;
+ }
+ table th, td {
+     padding: 8px;
+ }
+ #what{
+     text-align: center;
+ }
+ .table-bordered{
+     width: 500px;
+ }
+ 
+ .navbar-brand small {
+    display:block;
+    font-size:28px;
+  }
+
+  
+#navtop a{
+    font-size: 50px;
+}
+.container #qr{
+text-align: center;
+}
