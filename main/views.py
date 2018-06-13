@@ -1,13 +1,17 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from .models import Terr
+from django.http import HttpResponse, Http404
+from .models import Terr, Street, Number
 from django.template import loader
 # Create your views here.
 def index(request):
     return render(request, 'html/index.html')
 
 def detail(request, num):
-    return HttpResponse("<h1> LOl " + str(num) + "</h1>")
+    try:
+        terr = Terr.objects.get(pk=num)
+    except Terr.DoesNotExist:
+        raise Http404("whats are you seraching for")
+    return render(request, 'html/details.html', {'terr': terr})
 
 def all(request):
     all_terr = Terr.objects.all()

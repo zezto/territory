@@ -10,38 +10,42 @@
 </head>
 
 <body>
+<div class="row">
     {% if all_terr %}
-    <div class="row" style="margin: 0 0 ; padding: 0;">
 
         {% for terr in all_terr %}
-        <div class="col-sm-4 text-center">
-            <div style="text-align: center;">
-                <a class="text-center" href="/{{terr.id}}" style="font-size: 30px; text-decoration: none;">Territory {{ terr.num }}</a>
+
+            <div class="col-sm-4 text-center" style="padding-top: 50px; overflow: hidden;">
+                <div style="text-align: center;">
+                    <a class="text-center" href="/{{terr.id}}" style="font-size: 30px; text-decoration: none;">Territory {{ terr.num }}</a>
+                    <h2>{{terr.Owner}}</h2>
+                </div>
+                <div id="map{{terr.id}}" style="height: 400px; width: 400px; margin: 0 auto;">
+                </div>
+                <script>
+                    function initMap{{terr.id}}() {
+                        var latt = ('{{terr.lat_cordinate}}');
+                        var lngg = ('{{terr.long_cordinate}}');
+                        var uluru = { lat: Number(latt), lng: Number(lngg) };
+                        var map = new google.maps.Map(document.getElementById('map{{terr.id}}'), {
+                            zoom: 16,
+                            center: uluru,
+                            disableDefaultUI: true,
+                            scrollwheel: false,
+                            draggable: false,
+
+                        });
+                    }
+                </script>
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPfjjpbrQSZC09rzr4E7at0AONdo0Rvdk&callback=initMap{{terr.id}}">
+                </script>
             </div>
-            <div id="map1" style="height: 400px; width: 400px; margin: 0 auto;">
-            </div>
-            <script>
-                function initMap{{terr.id}}() {
-                    var latt = ('{{terr.lat_cordinate}}');
-                    var lngg = ('{{terr.long_cordinate}}');
-                    var uluru = { lat: Number(latt), lng: Number(lngg) };
-                    var map = new google.maps.Map(document.getElementById('map1'), {
-                        zoom: 16,
-                        center: uluru
-                    });
-                    var marker = new google.maps.Marker({
-                        position: uluru,
-                        map1: map1
-                    });
-                }
-            </script>
-            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPfjjpbrQSZC09rzr4E7at0AONdo0Rvdk&callback=initMap{{terr.id}}">
-            </script>
-        </div>
-    </div>
-    {% endfor %} {% else %}
+</div>
+</body>
+</html>
+    {% endfor %} 
+    {% else %}
     <h2>Nothing here </h2>
     {% endif %}
 </body>
 
-</html>

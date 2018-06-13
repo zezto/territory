@@ -1,0 +1,154 @@
+<!DOCTYPE html> {% load static from staticfiles %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Test</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'what.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+            <!-- Navigation top -->
+            <div class="container-fluid">
+                <div id="navtop">
+                    <nav class="navbar navbar-expand-sm bg-primary justify-content-center">
+                        <a class="navbar-brand" id="top-text" href="#" style="color: white; text-align:center;">Territory 20
+                            <small style="font-size: 20px;">{{terr.sub}}</small>
+                            <small> {{terr.Owner}}</small>
+                        </a>
+                    </nav>
+
+                </div>
+            </div>
+            <div class="container">
+                <div id="map">
+                    <script>
+                        function initMap() {
+                            var latt = ('{{terr.lat_cordinate}}');
+                            var lngg = ('{{terr.long_cordinate}}');
+                            var uluru = { lat: Number(latt), lng: Number(lngg)};
+                            var map = new google.maps.Map(document.getElementById('map'), {
+                                zoom: 16,
+                                center: uluru,
+                                styles: [
+                                    {
+                                        "featureType": "administrative.land_parcel",
+                                        "elementType": "labels",
+                                        "stylers": [
+                                            {
+                                                "visibility": "off"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "featureType": "administrative.neighborhood",
+                                        "stylers": [
+                                            {
+                                                "visibility": "off"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "featureType": "poi",
+                                        "elementType": "labels.text",
+                                        "stylers": [
+                                            {
+                                                "visibility": "off"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "featureType": "poi.business",
+                                        "stylers": [
+                                            {
+                                                "visibility": "off"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "featureType": "poi.park",
+                                        "elementType": "labels.text",
+                                        "stylers": [
+                                            {
+                                                "visibility": "off"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "featureType": "road.local",
+                                        "elementType": "labels",
+                                        "stylers": [
+                                            {
+                                                "visibility": "on"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            });
+                            var marker = new google.maps.Marker({
+                                position: uluru,
+                                map: map
+                            });
+                        }
+                    </script>
+                    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPfjjpbrQSZC09rzr4E7at0AONdo0Rvdk&callback=initMap">
+                    </script>
+
+                </div>
+            </div>
+            <div class="container table-bordered table-responsive">
+                {% for street in terr.street_set.all %}
+                    <div id="table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>1/5</th>
+                                    <th colspan="4">{{ street.name }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <th>#</th>
+                                    <th>1</th>
+                                    <th>2</th>
+                                    <th>3</th>
+                                    <th>Notas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>22503</td>
+                                    <td>NC</td>
+                                    <td>NC</td>
+                                    <td>Jose</td>
+                                    <td id="what">whtavdhbdbyufbuybuy</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {% endfor %}
+
+            </div>
+            <div class="container">
+                <div id="qr">
+                    <img src="{% static 'idk.png' %}" alt="qr code" class="img-responsive">
+                </div>
+            </div>
+</body>
+
+</html>
