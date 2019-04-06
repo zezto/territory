@@ -1,154 +1,222 @@
-<!DOCTYPE html> {% load static from staticfiles %}
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Test</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'what.css' %}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
-        crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-</head>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block body %}
 
 <body>
-            <!-- Navigation top -->
-            <div class="container-fluid">
-                <div id="navtop">
-                    <nav class="navbar navbar-expand-sm bg-primary justify-content-center">
-                        <a class="navbar-brand" id="top-text" href="#" style="color: white; text-align:center;">Territory 20
-                            <small style="font-size: 20px;">{{terr.sub}}</small>
-                            <small> {{terr.Owner}}</small>
-                        </a>
-                    </nav>
-
-                </div>
-            </div>
-            <div class="container">
-                <div id="map">
-                    <script>
-                        function initMap() {
-                            var latt = ('{{terr.lat_cordinate}}');
-                            var lngg = ('{{terr.long_cordinate}}');
-                            var uluru = { lat: Number(latt), lng: Number(lngg)};
-                            var map = new google.maps.Map(document.getElementById('map'), {
-                                zoom: 16,
-                                center: uluru,
-                                styles: [
+    <!-- Navigation top -->
+    <div id="detail-container">
+        <div id="map">
+            <script>
+                function initMap() {
+                    var latt = ('{{t.lat_cordinate}}');
+                    var lngg = ('{{t.long_cordinate}}');
+                    var uluru = { lat: Number(latt), lng: Number(lngg) };
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 16,
+                        center: uluru,
+                        //disableDefaultUI: true,
+                        styles: [
+                            {
+                                "featureType": "administrative.land_parcel",
+                                "elementType": "labels",
+                                "stylers": [
                                     {
-                                        "featureType": "administrative.land_parcel",
-                                        "elementType": "labels",
-                                        "stylers": [
-                                            {
-                                                "visibility": "off"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "featureType": "administrative.neighborhood",
-                                        "stylers": [
-                                            {
-                                                "visibility": "off"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "featureType": "poi",
-                                        "elementType": "labels.text",
-                                        "stylers": [
-                                            {
-                                                "visibility": "off"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "featureType": "poi.business",
-                                        "stylers": [
-                                            {
-                                                "visibility": "off"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "featureType": "poi.park",
-                                        "elementType": "labels.text",
-                                        "stylers": [
-                                            {
-                                                "visibility": "off"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "featureType": "road.local",
-                                        "elementType": "labels",
-                                        "stylers": [
-                                            {
-                                                "visibility": "on"
-                                            }
-                                        ]
+                                        "visibility": "off"
                                     }
                                 ]
-                            });
-                            var marker = new google.maps.Marker({
-                                position: uluru,
-                                map: map
-                            });
-                        }
-                    </script>
-                    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPfjjpbrQSZC09rzr4E7at0AONdo0Rvdk&callback=initMap">
-                    </script>
-
+                            },
+                            {
+                                "featureType": "administrative.neighborhood",
+                                "stylers": [
+                                    {
+                                        "visibility": "off"
+                                    }
+                                ]
+                            },
+                            {
+                                "featureType": "poi",
+                                "elementType": "labels.text",
+                                "stylers": [
+                                    {
+                                        "visibility": "off"
+                                    }
+                                ]
+                            },
+                            {
+                                "featureType": "poi.business",
+                                "stylers": [
+                                    {
+                                        "visibility": "off"
+                                    }
+                                ]
+                            },
+                            {
+                                "featureType": "poi.park",
+                                "elementType": "labels.text",
+                                "stylers": [
+                                    {
+                                        "visibility": "off"
+                                    }
+                                ]
+                            },
+                            {
+                                "featureType": "road.local",
+                                "elementType": "labels",
+                                "stylers": [
+                                    {
+                                        "visibility": "on"
+                                    }
+                                ]
+                            }
+                        ]
+                    });
+                    var marker = new google.maps.Marker({
+                        position: uluru,
+                        map: map
+                    });
+                }
+            </script>
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPfjjpbrQSZC09rzr4E7at0AONdo0Rvdk&callback=initMap">
+            </script>
+        </div>
+    </div>
+    <div id="terr-info">
+        <h3>{{t.sub|capfirst}}</h3>
+        <h3>Territory {{t.num|capfirst}}</h3>
+        <h5>{{t.owner|capfirst}}</h5>
+        <p id="terr-pk" style="display:none;">{{t.pk}}</p>
+        <button id="terr-options">value</button>
+        <div id="modal" style="display: none;" class="options">
+            <div class="modal-content">
+                <button id="options-close">&#10006</button>
+                <button id="add-street">Add street</button>
+                <div id="street-add" style="display:none;">
+                    <form method="post" id="street-add-form">
+                        {% csrf_token %}
+                        <input type="text">
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+                <div id='response' class="good" style="display:none;">
+                    <h3>Information Submitted Succesfully</h3>
+                </div>
+                <div id='response' class="empty" style="display:none;">
+                    <h3>Form can not be completly empty</h3>
                 </div>
             </div>
-            <div class="container table-bordered table-responsive">
-                {% for street in terr.street_set.all %}
-                    <div id="table">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>1/5</th>
-                                    <th colspan="4">{{ street.name }}</th>
-                                </tr>
-                                <tr>
-                                    <th>Fecha</th>
-                                    <th>{{street.date_worked}}</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                                <tr>
-                                    <th>#</th>
-                                    <th>1</th>
-                                    <th>2</th>
-                                    <th>3</th>
-                                    <th>Notas</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>22503</td>
-                                    <td>NC</td>
-                                    <td>NC</td>
-                                    <td>Jose</td>
-                                    <td id="what">whtavdhbdbyufbuybuy</td>
-                                </tr>
-                            </tbody>
-                        </table>
+
+        </div>
+    </div>
+    <div id="table-container">
+        {% for street in t.street_set.all %}
+        <div id="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{forloop.counter}}</th>
+                        <th colspan="3">{{ street.name }}</th>
+                        <th><button class="number-add" id="btn{{street.pk}}">...</button></th>
+                        <div id="modal" style="display: none;" class="num-options{{street.pk}}">
+                            <div class="modal-content">
+                                <button class="close-btn" id="num-options-close{{street.pk}}">&#10006</button>
+                                <button id="add-number">Add num</button>
+                                <div id="num-add{{street.pk}}" style="display:none;" class="test">
+                                    <form method="post" id="number-add-form">
+                                        {% csrf_token %}
+                                        <input type="text" id="number-add-box">
+                                        <button type="submit">Submit</button>
+                                    </form>
+                                </div>
+                                <div class="unq" id="num-add-info{{street.pk}}" style="display:none;">
+                                    <div class="good" style="display:none;">
+                                        <h3>Information Submitted Succesfully</h3>
+                                    </div>
+                                    <div class="empty" style="display:none;">
+                                        <h3>Form can not be completly empty</h3>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </tr>
+                    <tr>
+                        <div id="dates">
+                            {% for num in street.number_set.all %}
+                            <th>Fecha</th>
+                            <th>{{num.date_worked}}</th>
+                            <th>{{num.date_worked}}</th>
+                            <th>{{num.date_worked}}</th>
+                            <th></th>
+                        </div>
+                    </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>1</th>
+                        <th>2</th>
+                        <th>3</th>
+                        <th id="test">Notas</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+
+                    <tr>
+                        <td id="visit-num"><a href="#" id="{{num.pk}}">{{num.value}}</a></td>
+                        <td id="visit">
+                            {{num.visit1}}
+                        </td>
+                        <td id="visit">
+                            {{num.visit2}}
+                        </td>
+                        <td id="visit">
+                            {{num.visit3}}
+                        </td>
+                        <td id="visit-note">
+                            {{num.notes}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+
+
+            </table>
+            </num>
+        </div>
+        {% for num in street.number_set.all %}
+        <div id="modal" class="bg-modal{{num.pk}}" style="display:none;">
+            <div class="modal-content" id="enter">
+
+                <button class="btn" id="btn-close{{num.pk}}">&#10006</button>
+                <div id="address">
+                    <h3 id="info{{num.pk}}">{{num}} {{street}}</h3>
+                    <p id="pk" style="display:none;">{{num.pk}}</p>
+                </div>
+                <form method="post" id="post-form{{num.pk}}" class="detail-form">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button type="submit">Submit!</button>
+                </form>
+                <div id="post-result{{num.pk}}" class="result">
+                    <div class="good" style="display:none;">
+                        <h3>Information Submitted Succesfully</h3>
                     </div>
-                {% endfor %}
-
-            </div>
-            <div class="container">
-                <div id="qr">
-                    <img src="{% static 'idk.png' %}" alt="qr code" class="img-responsive">
+                    <div class="empty" style="display:none;">
+                        <h3>Form can not be completly empty</h3>
+                    </div>
+                    <div class="bad" style="display:none;">
+                        <h3>Error along the way check information and try again</h3>
+                    </div>
                 </div>
             </div>
+        </div>
+        {% endfor %}
+        {% endfor %}
+    </div>
+    {% endblock body %}
+
 </body>
 
 </html>
