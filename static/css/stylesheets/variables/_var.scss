@@ -1,0 +1,7 @@
+$base-font: Arial, Helvetica, sans-serif;
+$background-color: #007BFF;
+%base-grid{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(3, auto);
+}
