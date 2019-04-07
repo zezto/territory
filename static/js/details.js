@@ -120,29 +120,35 @@ $(document).ready(function () {
         let lel = '#num-add' + pk;
         $(lel).toggle();
     });
-    $('#number-add-form').on('submit', (event) => {
+    $('.test button[type=submit]').on('click', (event) => {
         event.preventDefault();
-        let pather = `#num-add-info${pk}`
         addNumber();
     })
     function addNumber() {
-        let numberValue = $('#number-add-box').val();
+        let testerr = '#number-add-box' + pk
+        let numberValue = $(testerr).val();
+        console.log(numberValue)
         let pathway = location.pathname
-        $.ajax({
-            url: pathway + "add-number",
-            type: 'POST',
-            data: { pk, numberValue },
+        let pather = '.unq'
+        if (numberValue.length == 0) {
+            $('.empty').show(3).delay(3000).hide(3);
+        }
+        else {
+            $.ajax({
+                url: pathway + "add-number",
+                type: 'POST',
+                data: { pk, numberValue },
 
-            success: (json) => {
-                console.log(json)
-                $(pather).toggleClass('good')
-                $(pather).show(1).delay(1000).hide(1);
-                $(pather).toggleClass('good')
-            },
+                success: (json) => {
+                    console.log(json)
+                    $(pather).show()
+                    $('.good').show(3).delay(3000).hide(3);
+                },
 
-            error: (xhr, errmsg, err) => {
-                console.log(xhr.status + ": " + xhr.responseText);
-            }
-        })
+                error: (xhr, errmsg, err) => {
+                    console.log(xhr.status + ": " + xhr.responseText);
+                }
+            })
+        }
     }
 });
