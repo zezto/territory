@@ -85,7 +85,7 @@
         <h3>Territory {{t.num|capfirst}}</h3>
         <h5>{{t.owner|capfirst}}</h5>
         <p id="terr-pk" style="display:none;">{{t.pk}}</p>
-        <button id="terr-options">value</button>
+        <button id="terr-options">Options</button>
         <div id="modal" style="display: none;" class="options">
             <div class="modal-content">
                 <button id="options-close">&#10006</button>
@@ -123,7 +123,7 @@
                                 <div id="num-add{{street.pk}}" style="display:none;" class="test">
                                     <form method="post" id="number-add-form">
                                         {% csrf_token %}
-                                        <input type="text" id="number-add-box">
+                                        <input type="text" id="number-add-box{{street.pk}}">
                                         <button type="submit">Submit</button>
                                     </form>
                                 </div>
