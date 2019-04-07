@@ -26,9 +26,7 @@ SECRET_KEY = 'e+u2a7wnsk19@6b45#x7hdac0d0k=n!)o8ptcwb#2n26v46o!0'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '*',
-    '10.0.0.158',
-    '127.0.0.1',
+    '*'
 ]
 
 
@@ -80,8 +78,12 @@ WSGI_APPLICATION = 'teritory.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+	'NAME': 'jardines',
+	'USER': 'jardinesuser',
+	'PASSWORD':'jardinespassword',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -123,3 +125,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
