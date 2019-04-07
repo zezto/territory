@@ -22,6 +22,7 @@ def all(request):
 
 
 def test(request, pk):
+    terr = Terr.objects.all()
     return render(request, 'html/test.html', {'t': terr, 'form': form, })
 
 

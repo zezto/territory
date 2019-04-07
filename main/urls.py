@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.urls import path, re_path
 
 from . import views
@@ -16,3 +17,16 @@ urlpatterns = [
         re_path(r'^(?P<pk>[0-9]+)/add-number$', views.addnumber, name='add-number'),
 
 ]
+=======
+from django.urls import path, re_path
+
+from . import views
+
+app_name = 'main'
+
+urlpatterns = [
+    path('', views.index, name='index'),
+    path('all', views.all, name='all'),
+    re_path(r'^(?P<num>[0-9]+)$', views.detail, name='details'),
+]
+>>>>>>> eb1cae20ed54bbf337ebaf6fff9c53f801ddc831
