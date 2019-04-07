@@ -71,16 +71,25 @@ def detail(request, pk):
     else:
         return render(request, 'html/details.html', {'t': terr})
 
+def spliter(input):
+    hello = list()
+    words = input.split(',')
+    for word in words:
+        hello.append(word)
+    return hello
 
 @csrf_exempt
 def addstreet(request, pk):
     if request.method == 'POST':
+        holdup = request.POST['streetName']
+        func = spliter(holdup)
         selected_terr = Terr.objects.get(pk=pk)
-        newnew = Street()
-        newnew.name = request.POST['streetName']
-        newnew.date_worked = datetime.datetime.now()
-        newnew.terr = selected_terr
-        newnew.save()
+        for new in func:
+            newnew = Street()
+            newnew.name = new
+            newnew.date_worked = datetime.datetime.now()
+            newnew.terr = selected_terr
+            newnew.save()
         return HttpResponse(
             json.dumps({"workesd": "ayeeeeee", "lol": 'lol'}),
             content_type="application/json"
@@ -91,11 +100,14 @@ def addstreet(request, pk):
 def addnumber(request, pk):
     if request.method == 'POST':
         selected_street = Street.objects.get(pk=request.POST['pk'])
-        newnewnum = Number()
-        newnewnum.value = request.POST['numberValue']
-        newnewnum.street = selected_street
-        newnewnum.save()
-        print('great')
+        sent_data = request.POST['numberValue']
+        func = spliter(sent_data)
+        for new in func:
+            print(new)
+            newnewnum = Number()
+            newnewnum.value = new
+            newnewnum.street = selected_street
+            newnewnum.save()
         return HttpResponse(
             json.dumps({"workesd": "ayeeeeee", "lol": 'lol'}),
             content_type="application/json"
