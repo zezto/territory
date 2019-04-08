@@ -16,3 +16,4 @@ urlpatterns = [
     re_path(r'^(?P<pk>[0-9]+)/add-street$', views.addstreet, name='add-street'),
     re_path(r'^(?P<pk>[0-9]+)/add-number$', views.addnumber, name='add-number'),
 
+]

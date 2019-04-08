@@ -88,7 +88,6 @@ body {
 #terr-info h5 {
   margin: 0 0;
 }
-
 #detail-container {
   display: -ms-grid;
   display: grid;
@@ -112,7 +111,7 @@ table {
   border: 5px gray solid;
   margin: 0 auto;
   border-collapse: collapse;
-  max-width: 60%;
+  width: 40%;
 }
 
 #table {
@@ -275,7 +274,9 @@ form {
   -ms-grid-column-span: 3;
   grid-column: 2/5;
 }
-
+#fecha{
+  width: 75px;
+}
 @media only screen and (max-device-width: 480px) {
   #detail-container #map {
     -ms-grid-row: 1;
@@ -322,7 +323,10 @@ form {
     height: auto;
   }
   table {
-    max-width: 95%;
+    width: 95%;
+  }
+  #fecha{
+    width: 50px;
   }
 }
 /*# sourceMappingURL=main.css.map */
