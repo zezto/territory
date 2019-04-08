@@ -23,7 +23,7 @@ table{
     border: 5px gray solid;
     margin: 0 auto;
     border-collapse: collapse;
-    max-width:60%;
+    width: 40%;
 }
 #table{
     padding: 5px;
@@ -119,6 +119,10 @@ form{
     grid-row: 4;
     grid-column: 2/5;
 }
+#fecha{
+    white-space: nowrap;
+    width: 75px;
+}
 
 @media only screen and (max-device-width: 480px) {
     #detail-container #map{
@@ -155,6 +159,6 @@ form{
         height: auto;
     }
     table{
-        max-width:95%;
+        width:95%;
     }
 }
