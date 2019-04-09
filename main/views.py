@@ -71,6 +71,10 @@ def detail(request, pk):
     else:
         return render(request, 'html/details.html', {'t': terr})
 
+def streetdeets(request, pk, streetpk):
+    street = Street.objects.get(pk=streetpk)
+    return render(request, 'html/street_details.html', {'street': street})
+
 def spliter(input):
     hello = list()
     words = input.split(',')
@@ -132,13 +136,3 @@ def create_terr(request):
     else:
         form = CreateForm()
         return render(request, 'main/terr_form.html', {'form': form})
-
-
-class TerrUpdate(UpdateView):
-    model = Terr
-    fields = ['num', 'sub', 'owner', 'lat_cordinate', 'long_cordinate', ]
-
-
-class TerrDelete(DeleteView):
-    model = Terr
-    success_url = reverse_lazy('index')
