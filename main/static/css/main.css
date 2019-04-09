@@ -112,7 +112,7 @@ table {
   border: 5px gray solid;
   margin: 0 auto;
   border-collapse: collapse;
-  max-width: 60%;
+  width: 40%;
 }
 
 #table {
@@ -276,6 +276,11 @@ form {
   grid-column: 2/5;
 }
 
+#fecha {
+  white-space: nowrap;
+  width: 75px;
+}
+
 @media only screen and (max-device-width: 480px) {
   #detail-container #map {
     -ms-grid-row: 1;
@@ -322,7 +327,7 @@ form {
     height: auto;
   }
   table {
-    max-width: 95%;
+    width: 95%;
   }
 }
 /*# sourceMappingURL=main.css.map */
