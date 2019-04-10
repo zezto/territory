@@ -82,7 +82,7 @@ def detail(request, pk):
             box_size=10,
             border=4,
         )
-        data = '10.0.0.4:8000/%s/ ' % pk
+        data = 'http://207.148.0.247/%s/ ' % pk
         qr.add_data(data)
         qr.make(fit=True)
         img = qr.make_image()
@@ -108,7 +108,7 @@ def streetdeets(request, pk, streetpk):
             box_size=10,
             border=4,
         )
-        data = '10.0.0.4:8000/%s/%s ' % (pk, streetpk)
+        data = 'http://207.148.0.247/%s/%s ' % (pk, streetpk)
         qr.add_data(data)
         qr.make(fit=True)
         img = qr.make_image()
