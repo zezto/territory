@@ -3,16 +3,116 @@
 {% load staticfiles %}
 
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<body>
-{% block body %}
 
-<h1>{{street.name}}</h1>
-{% endblock body %}
+<body>
+    {% load static %}
+    {% block body %}
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th colspan="3">{{street.name}}</th>
+                <th><button class="number-add" id="btn{{street.pk}}">...</button></th>
+                <div id="modal" style="display: none;" class="num-options{{street.pk}}">
+                    <div class="modal-content" id="enter">
+                        <button class="close-btn" id="num-options-close{{street.pk}}">&#10006</button>
+                        <button id="add-number">Add num</button>
+                        <button id="QR">QR Code</button>
+                        <div id="num-add{{street.pk}}" style="display:none;" class="test">
+                            <form method="post" id="number-add-form">
+                                {% csrf_token %}
+                                <input type="text" id="number-add-box{{street.pk}}">
+                                <button type="submit">Submit</button>
+                            </form>
+                        </div>
+                        <div id="QR-view" style="display:none;">
+                            <img src="{% get_static_prefix %}QR/street-{{street.pk}}.jpeg">
+                        </div>
+                        <div class="unq" id="num-add-info{{street.pk}}" style="display:none;">
+                            <div class="good" style="display:none;">
+                                <h3>Information Submitted Succesfully</h3>
+                            </div>
+                            <div class="empty" style="display:none;">
+                                <h3>Form can not be completly empty</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </tr>
+            <tr>
+                <div id="dates">
+                    <th>Fecha</th>
+                    <th id="fecha"></th>
+                    <th id="fecha"></th>
+                    <th id="fecha"></th>
+                    <th></th>
+                </div>
+            </tr>
+            <tr>
+                <th>#</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th id="test">Notas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for num in street.number_set.all %}
+            <tr>
+                <td id="visit-num"><a href="#" id="{{num.pk}}">{{num.value}}</a></td>
+                <td id="visit">
+                    {{num.visit1}}
+                </td>
+                <td id="visit">
+                    {{num.visit2}}
+                </td>
+                <td id="visit">
+                    {{num.visit3}}
+                </td>
+                <td id="visit-note">
+                    {{num.notes}}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% for num in street.number_set.all %}
+    <div id="modal" class="bg-modal{{num.pk}}" style="display:none;">
+        <div class="modal-content" id="enter">
+
+            <button class="btn" id="btn-close{{num.pk}}">&#10006</button>
+            <div id="address">
+                <h3 id="info{{num.pk}}">{{num}} {{street}}</h3>
+                <p id="pk" style="display:none;">{{num.pk}}</p>
+            </div>
+            <form method="post" id="post-form{{num.pk}}" class="detail-form">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit">Submit!</button>
+            </form>
+            <div id="post-result{{num.pk}}" class="result">
+                <div class="good" style="display:none;">
+                    <h3>Information Submitted Succesfully</h3>
+                </div>
+                <div class="empty" style="display:none;">
+                    <h3>Form can not be completly empty</h3>
+                </div>
+                <div class="bad" style="display:none;">
+                    <h3>Error along the way check information and try again</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% endblock body %}
 </body>
+
 </html>

@@ -53,6 +53,10 @@ tr, th, td{
     background-color: white;
     text-align: center;
 }
+.modal-content#enter{
+    min-height: 315px;
+    height: auto;
+}
 .btn , .close-btn{
     grid-column: 5;
     grid-row: 1;
@@ -115,9 +119,23 @@ form{
     grid-row: 2;
     justify-content: center;
 }
+#QR{
+    grid-column: 2/5;
+    grid-row: 3;
+    justify-content: center;
+}
+#QR-view{
+    grid-row: 4;
+    grid-column: 2/5;
+    justify-self: center;
+    img{
+        height: 20vw;
+    }
+}
 #street-add{
     grid-row: 4;
     grid-column: 2/5;
+    align-self: center;
 }
 #fecha{
     white-space: nowrap;
@@ -160,5 +178,13 @@ form{
     }
     table{
         width:95%;
+    }
+    #QR-view{
+        grid-row: 4;
+        grid-column: 2/5;
+        justify-self: center;
+        img{
+            height: 50vw;
+        }
     }
 }

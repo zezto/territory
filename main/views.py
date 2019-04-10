@@ -9,6 +9,14 @@ from django.forms import modelformset_factory, inlineformset_factory, formset_fa
 from django.views.decorators.csrf import csrf_exempt
 import json
 import datetime
+import qrcode
+import os
+from pathlib import Path
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+QR_ROOT = os.path.join('main/static/QR/')
 
 
 class IndexView(TemplateView):
@@ -27,7 +35,7 @@ def test(request, pk):
 
 
 @csrf_exempt
-def create_post(request, pk):
+def create_post(request, pk, streetpk):
     if request.method == 'POST':
         number = request.POST.get('number')
         result = request.POST.get('results')
@@ -64,16 +72,51 @@ def create_post(request, pk):
 def detail(request, pk):
     form = VisitForm()
     terr = Terr.objects.get(pk=pk)
+    pathtoqr = Path(QR_ROOT+'%s.jpeg' % pk)
+    if pathtoqr.is_file():
+        pass
+    else:
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_H,
+            box_size=10,
+            border=4,
+        )
+        data = '10.0.0.4:8000/%s/ ' % pk
+        qr.add_data(data)
+        qr.make(fit=True)
+        img = qr.make_image()
+        final = QR_ROOT + '%s.jpeg' % pk
+        img.save(final)
     if terr.street_set.all():
-        form = VisitForm()
         terr = get_object_or_404(Terr, pk=pk)
         return render(request, 'html/details.html', {'t': terr, 'form': form})
     else:
         return render(request, 'html/details.html', {'t': terr})
 
+
 def streetdeets(request, pk, streetpk):
     street = Street.objects.get(pk=streetpk)
-    return render(request, 'html/street_details.html', {'street': street})
+    form = VisitForm()
+    pathtostreetqr = Path(QR_ROOT + 'street_%s' % streetpk)
+    if pathtostreetqr.is_file():
+        pass
+    else:
+        qr = qrcode.QRCode(
+            version=1,
+            error_correction=qrcode.constants.ERROR_CORRECT_H,
+            box_size=10,
+            border=4,
+        )
+        data = '10.0.0.4:8000/%s/%s ' % (pk, streetpk)
+        qr.add_data(data)
+        qr.make(fit=True)
+        img = qr.make_image()
+        final = QR_ROOT + 'street-%s.jpeg' % streetpk
+        img.save(final)
+
+    return render(request, 'html/street_details.html', {'street': street, 'form': form})
+
 
 def spliter(input):
     hello = list()
@@ -81,6 +124,7 @@ def spliter(input):
     for word in words:
         hello.append(word)
     return hello
+
 
 @csrf_exempt
 def addstreet(request, pk):
@@ -101,7 +145,7 @@ def addstreet(request, pk):
 
 
 @csrf_exempt
-def addnumber(request, pk):
+def addnumber(request, pk, streetpk):
     if request.method == 'POST':
         selected_street = Street.objects.get(pk=request.POST['pk'])
         sent_data = request.POST['numberValue']
