@@ -80,6 +80,8 @@
             </script>
         </div>
     </div>
+    {% load static %}
+    
     <div id="terr-info">
         <h3>{{t.sub|capfirst}}</h3>
         <h3>Territory {{t.num|capfirst}}</h3>
@@ -87,15 +89,21 @@
         <p id="terr-pk" style="display:none;">{{t.pk}}</p>
         <button id="terr-options">Options</button>
         <div id="modal" style="display: none;" class="options">
-            <div class="modal-content">
+            <div class="modal-content" id="enter">
                 <button id="options-close">&#10006</button>
                 <button id="add-street">Add street</button>
+                <button id="QR">QR Code</button>
                 <div id="street-add" style="display:none;">
                     <form method="post" id="street-add-form">
                         {% csrf_token %}
                         <input type="text">
                         <button type="submit">Submit</button>
                     </form>
+                
+                
+                </div>
+                <div id="QR-view" style="display:none;">
+                    <img src="{% get_static_prefix %}QR/{{t.pk}}.jpeg">
                 </div>
                 <div id='response' class="good" style="display:none;">
                     <h3>Information Submitted Succesfully</h3>
@@ -114,30 +122,8 @@
                 <thead>
                     <tr>
                         <th>{{forloop.counter}}</th>
-                        <th colspan="3">{{ street.name }}</th>
-                        <th><button class="number-add" id="btn{{street.pk}}">...</button></th>
-                        <div id="modal" style="display: none;" class="num-options{{street.pk}}">
-                            <div class="modal-content">
-                                <button class="close-btn" id="num-options-close{{street.pk}}">&#10006</button>
-                                <button id="add-number">Add num</button>
-                                <div id="num-add{{street.pk}}" style="display:none;" class="test">
-                                    <form method="post" id="number-add-form">
-                                        {% csrf_token %}
-                                        <input type="text" id="number-add-box{{street.pk}}">
-                                        <button type="submit">Submit</button>
-                                    </form>
-                                </div>
-                                <div class="unq" id="num-add-info{{street.pk}}" style="display:none;">
-                                    <div class="good" style="display:none;">
-                                        <h3>Information Submitted Succesfully</h3>
-                                    </div>
-                                    <div class="empty" style="display:none;">
-                                        <h3>Form can not be completly empty</h3>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                        <th colspan="3"><a href="{% url 'main:street-details' t.pk street.pk  %}">{{street.name}}</a></th>
+                        <th></th>
                     </tr>
                     <tr>
                         <div id="dates">
@@ -162,7 +148,7 @@
 
 
                     <tr>
-                        <td id="visit-num"><a href="#" id="{{num.pk}}">{{num.value}}</a></td>
+                        <td id="visit-num">{{num.value}}</td>
                         <td id="visit">
                             {{num.visit1}}
                         </td>
