@@ -23,7 +23,7 @@ table{
     border: 5px gray solid;
     margin: 0 auto;
     border-collapse: collapse;
-    max-width:60%;
+    width: 40%;
 }
 #table{
     padding: 5px;
@@ -52,6 +52,10 @@ tr, th, td{
     height: 315px;
     background-color: white;
     text-align: center;
+}
+.modal-content#enter{
+    min-height: 315px;
+    height: auto;
 }
 .btn , .close-btn{
     grid-column: 5;
@@ -115,9 +119,27 @@ form{
     grid-row: 2;
     justify-content: center;
 }
+#QR{
+    grid-column: 2/5;
+    grid-row: 3;
+    justify-content: center;
+}
+#QR-view{
+    grid-row: 4;
+    grid-column: 2/5;
+    justify-self: center;
+    img{
+        height: 20vw;
+    }
+}
 #street-add{
     grid-row: 4;
     grid-column: 2/5;
+    align-self: center;
+}
+#fecha{
+    white-space: nowrap;
+    width: 75px;
 }
 
 @media only screen and (max-device-width: 480px) {
@@ -155,6 +177,14 @@ form{
         height: auto;
     }
     table{
-        max-width:95%;
+        width:95%;
+    }
+    #QR-view{
+        grid-row: 4;
+        grid-column: 2/5;
+        justify-self: center;
+        img{
+            height: 50vw;
+        }
     }
 }

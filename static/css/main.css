@@ -88,6 +88,7 @@ body {
 #terr-info h5 {
   margin: 0 0;
 }
+
 #detail-container {
   display: -ms-grid;
   display: grid;
@@ -150,6 +151,11 @@ tr, th, td {
   height: 315px;
   background-color: white;
   text-align: center;
+}
+
+.modal-content#enter {
+  min-height: 315px;
+  height: auto;
 }
 
 .btn, .close-btn {
@@ -267,16 +273,47 @@ form {
           justify-content: center;
 }
 
+#QR {
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 3;
+  grid-column: 2/5;
+  -ms-grid-row: 3;
+  grid-row: 3;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#QR-view {
+  -ms-grid-row: 4;
+  grid-row: 4;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 3;
+  grid-column: 2/5;
+  -ms-grid-column-align: center;
+      justify-self: center;
+}
+
+#QR-view img {
+  height: 20vw;
+}
+
 #street-add {
   -ms-grid-row: 4;
   grid-row: 4;
   -ms-grid-column: 2;
   -ms-grid-column-span: 3;
   grid-column: 2/5;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
 }
-#fecha{
+
+#fecha {
+  white-space: nowrap;
   width: 75px;
 }
+
 @media only screen and (max-device-width: 480px) {
   #detail-container #map {
     -ms-grid-row: 1;
@@ -325,8 +362,17 @@ form {
   table {
     width: 95%;
   }
-  #fecha{
-    width: 50px;
+  #QR-view {
+    -ms-grid-row: 4;
+    grid-row: 4;
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 3;
+    grid-column: 2/5;
+    -ms-grid-column-align: center;
+        justify-self: center;
+  }
+  #QR-view img {
+    height: 50vw;
   }
 }
 /*# sourceMappingURL=main.css.map */

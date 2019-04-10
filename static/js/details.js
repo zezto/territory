@@ -41,7 +41,7 @@ $(document).ready(function () {
         }
         else {
             $.ajax({
-                url: pathway + "create_post", // the endpoint
+                url: pathway + "/create_post", // the endpoint
                 type: "POST", // http method
                 data: { number: real_deal, idd, results }, // data sent with the post request
 
@@ -68,6 +68,9 @@ $(document).ready(function () {
         $('.options').toggleClass('active')
         $('.options').toggle();
 
+    });
+    $('#QR').on('click', () =>{
+        $('#QR-view').toggle()
     });
     $('#add-street').on('click', () => {
         $('#street-add').toggle();
@@ -135,7 +138,7 @@ $(document).ready(function () {
         }
         else {
             $.ajax({
-                url: pathway + "add-number",
+                url: pathway + "/add-number",
                 type: 'POST',
                 data: { pk, numberValue },
 
