@@ -77,7 +77,6 @@ def create_post(request, pk, streetpk):
 def detail(request, pk):
     form = VisitForm()
     terr = Terr.objects.get(pk=pk)
-    first_num = street.number_set.all().first()
     pathtoqr = Path(QR_ROOT+'%s.jpeg' % pk)
     if pathtoqr.is_file():
         pass
@@ -96,7 +95,7 @@ def detail(request, pk):
         img.save(final)
     if terr.street_set.all():
         terr = get_object_or_404(Terr, pk=pk)
-        return render(request, 'html/details.html', {'t': terr, 'form': form, 'f':first_num})
+        return render(request, 'html/details.html', {'t': terr, 'form': form})
     else:
         return render(request, 'html/details.html', {'t': terr})
 
