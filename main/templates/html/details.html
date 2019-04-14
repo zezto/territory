@@ -129,9 +129,9 @@
                         <div id="dates">
                             {% for num in street.number_set.all %}
                             <th>Fecha</th>
-                            <th id="fecha"></th>
-                            <th id="fecha"></th>
-                            <th id="fecha"></th>
+                            <th id="fecha">{{street.number_set.all.first.date_worked1}}</th>
+                            <th id="fecha">{{street.number_set.all.first.date_worked2}}</th>
+                            <th id="fecha">{{street.number_set.all.first.date_worked3}}</th>
                             <th></th>
                         </div>
                     </tr>
