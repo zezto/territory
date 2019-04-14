@@ -32,7 +32,13 @@ class Number(models.Model):
     visit3 = models.CharField(max_length=100, blank=True)
     notes = models.CharField(max_length=100, blank=True)
     street = models.ForeignKey(Street, on_delete=models.CASCADE)
-    date_worked = models.DateField(auto_now_add=True)
+    date_worked1 = models.CharField(max_length=150, blank=True)
+    date_worked2 = models.CharField(max_length=150, blank=True)
+    date_worked3 = models.CharField(max_length=150, blank=True)
+
+
+    class Meta:
+        ordering = ['value']
 
     def __str__(self):
         return str(self.value)

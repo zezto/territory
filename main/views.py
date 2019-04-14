@@ -45,17 +45,22 @@ def create_post(request, pk, streetpk):
         try:
             for num in result:
                 if len(result[num]) != 0:
-                    print(num)
                     if num == '0':
                         selectNumber.visit1 = result[num]
+                        selectNumber.date_worked1 = str(datetime.date.today().strftime('%b %d,%Y'))
                     if num == '1':
                         selectNumber.visit2 = result[num]
+                        selectNumber.date_worked2 = str(datetime.date.today().strftime('%b %d,%Y'))
+
+
                     if num == '2':
                         selectNumber.visit3 = result[num]
+                        selectNumber.date_worked3 = str(datetime.date.today().strftime('%b %d,%Y'))
+
+
                     if num == '3':
                         selectNumber.notes = result[num]
                     selectNumber.save()
-
         except KeyError:
             print('error key')
         return HttpResponse(
@@ -98,6 +103,7 @@ def detail(request, pk):
 def streetdeets(request, pk, streetpk):
     street = Street.objects.get(pk=streetpk)
     form = VisitForm()
+    first_num = street.number_set.all().first()
     pathtostreetqr = Path(QR_ROOT + 'street_%s' % streetpk)
     if pathtostreetqr.is_file():
         pass
@@ -115,7 +121,7 @@ def streetdeets(request, pk, streetpk):
         final = QR_ROOT + 'street-%s.jpeg' % streetpk
         img.save(final)
 
-    return render(request, 'html/street_details.html', {'street': street, 'form': form})
+    return render(request, 'html/street_details.html', {'street': street,'f':first_num, 'form': form})
 
 
 def spliter(input):
