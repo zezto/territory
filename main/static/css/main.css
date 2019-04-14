@@ -196,8 +196,8 @@ form {
 .test {
   display: -ms-grid;
   display: grid;
-  -ms-grid-row: 3;
-  grid-row: 3;
+  -ms-grid-row: 4;
+  grid-row: 4;
   grid-column: 1/-1;
   -ms-grid-columns: (1fr)[5];
       grid-template-columns: repeat(5, 1fr);
