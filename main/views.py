@@ -1,10 +1,10 @@
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views import generic
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from django.urls import reverse_lazy
 from .models import Terr, Street, Number
-from .forms import VisitForm, CreateForm
-from django.shortcuts import render, get_object_or_404, HttpResponse, Http404, HttpResponseRedirect, render_to_response
+from .forms import VisitForm, CreateForm, UserLoginForm
+from django.shortcuts import render, get_object_or_404, HttpResponse, redirect, HttpResponseRedirect, render_to_response
 from django.forms import modelformset_factory, inlineformset_factory, formset_factory
 from django.views.decorators.csrf import csrf_exempt
 import json
@@ -12,6 +12,7 @@ import datetime
 import qrcode
 import os
 from pathlib import Path
+from django.contrib.auth import authenticate, login
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -19,8 +20,28 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 QR_ROOT = os.path.join('main/static/QR/')
 
 
-class IndexView(TemplateView):
+class UserFormView(View):
     template_name = 'html/index.html'
+    form_class = UserLoginForm
+
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('main:all')
+            else:
+                return render(request, self.template_name, {'form': form, 'code': '1'})
+
+        else:
+            return render(request, self.template_name, {'form': form, 'code': '2'})
 
 
 def all(request):

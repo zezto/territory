@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 
 class VisitForm(forms.Form):
     visit1 = forms.CharField(max_length=2, required=False)
@@ -12,3 +13,7 @@ class CreateForm(forms.Form):
     owner = forms.CharField(max_length=40)
     lat_cordinate = forms.FloatField()
     long_cordinate = forms.FloatField()
+
+class UserLoginForm(forms.Form):
+    username = forms.CharField(max_length=50)
+    password = forms.CharField(widget=forms.PasswordInput)

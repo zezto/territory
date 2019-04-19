@@ -375,4 +375,45 @@ form {
     height: 50vw;
   }
 }
+
+#og {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[5];
+      grid-template-columns: repeat(5, 1fr);
+  -ms-grid-rows: (100px)[5];
+      grid-template-rows: repeat(5, 100px);
+}
+
+#og #login-box {
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 3;
+  grid-column: 2/5;
+  grid-row: 2/-1;
+  -ms-grid-column-align: center;
+      justify-self: center;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  text-align: center;
+}
+
+#og #login-box h3 {
+  text-align: center;
+}
+
+#og #login-box button#submit-form {
+  margin-top: 15px;
+}
+
+#og #login-incorrect, #og #login-error {
+  -ms-grid-row: 2;
+  grid-row: 2;
+  -ms-grid-column: 3;
+  -ms-grid-column-span: 1;
+  grid-column: 3/4;
+  text-align: center;
+  color: red;
+  font-weight: bold;
+}
 /*# sourceMappingURL=main.css.map */
