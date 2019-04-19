@@ -201,8 +201,8 @@ form {
   grid-column: 1/-1;
   -ms-grid-columns: (1fr)[5];
       grid-template-columns: repeat(5, 1fr);
-  -ms-grid-rows: (auto)[3];
-      grid-template-rows: repeat(3, auto);
+  -ms-grid-rows: (auto)[2];
+      grid-template-rows: repeat(2, auto);
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -212,16 +212,16 @@ form {
 }
 
 .test input {
-  -ms-grid-row: 3;
-  grid-row: 3;
+  -ms-grid-row: 1;
+  grid-row: 1;
   -ms-grid-column: 2;
   -ms-grid-column-span: 3;
   grid-column: 2/5;
 }
 
 .test button {
-  -ms-grid-row: 4;
-  grid-row: 4;
+  -ms-grid-row: 2;
+  grid-row: 2;
   -ms-grid-column: 2;
   -ms-grid-column-span: 3;
   grid-column: 2/5;
