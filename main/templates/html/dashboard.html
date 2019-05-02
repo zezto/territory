@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    {% block body %}
+    {% if request.user.is_authenticated %}
+    <div id="dashboard-body">
+        <div id="dash-header">
+            <h1>Your Profile </h1>
+            <h2>{{request.user.get_full_name}}</h2>
+            <h2>{{request.user.groups.all.0}}</h2>
+        </div>
+        <div id="dash-body">
+            {% if t %}
+                <h3>Territory under your name:</h3>
+                {% for terr in t %}
+                    <h3><a href="{% url 'main:details' terr.pk %}">{{terr.num}} {{terr.sub}}</a></h3>
+                {% endfor %}
+            {% else %}
+                <h3>you have nothing here :(</h3>
+            {% endif %}
+        </div>
+
+    </div>
+    {% endif %}
+    {% endblock body %}
+</body>
+
+</html>

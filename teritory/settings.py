@@ -123,3 +123,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+
+ACCOUNT_SIGNUP_FORM_CLASS = 'teritory.main.forms.CreateUser'
+LOGIN_REDIRECT_URL = '/dashboard'

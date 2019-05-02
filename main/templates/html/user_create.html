@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    {% block body %}
+    <div id="create-acc-body">
+        <h2>Create Account</h2>
+        <form method="post">
+            {% csrf_token %}
+            <h3>First Name</h3><br>
+            {{form.first_name}}
+            <h3>Last name</h3><br>
+            {{form.last_name}}
+            <h3>Email</h3><br>
+            {{form.email}}
+            <h3>Username</h3><br>
+            {{form.username}}
+            <h3>Password</h3><br>
+            {{form.password}} <br>
+            <button type="submit">Submit</button>
+            {{form.error}}
+        </form>
+    </div>
+
+    {% endblock body %}
+</body>
+
+</html>

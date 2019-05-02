@@ -1,6 +1,9 @@
 $(document).ready(function () {
     let select;
-    let idd
+    let idd;
+    $('#more').on('click', () =>{
+        $('#pulldown').slideToggle();
+    });
     $('a').on('click', function (event) {
         idd = Number(event.target.id);
         select = '.bg-modal' + idd
@@ -69,9 +72,18 @@ $(document).ready(function () {
         $('.options').toggle();
 
     });
-    $('#QR').on('click', () =>{
+    function checkOpen (event){
+        let ok = event.target.id
+        console.log(ok)
+        //make function to close div when clicked out
+    }
+    $('#QR').on('click', (event) =>{
         $('#QR-view').toggle()
+        checkOpen(event)
     });
+    $('#quick-stats').on('click', () =>{
+        $('#stats-view').toggle();
+    })
     $('#add-street').on('click', () => {
         $('#street-add').toggle();
     });

@@ -85,7 +85,7 @@
     <div id="terr-info">
         <h3>{{t.sub|capfirst}}</h3>
         <h3>Territory {{t.num|capfirst}}</h3>
-        <h5>{{t.owner|capfirst}}</h5>
+        <h5>{{t.owner.get_full_name|capfirst}}</h5>
         <p id="terr-pk" style="display:none;">{{t.pk}}</p>
         <button id="terr-options">Options</button>
         <div id="modal" style="display: none;" class="options">
@@ -93,17 +93,30 @@
                 <button id="options-close">&#10006</button>
                 <button id="add-street">Add street</button>
                 <button id="QR">QR Code</button>
-                <div id="street-add" style="display:none;">
+                <button id="quick-stats">Quick Stats</button>
+                <div class="optionz" id="street-add" style="display:none;">
                     <form method="post" id="street-add-form">
                         {% csrf_token %}
                         <input type="text">
                         <button type="submit">Submit</button>
-                    </form>
-                
-                
+                    </form>         
                 </div>
-                <div id="QR-view" style="display:none;">
+                <div class="optionz" id="QR-view" style="display:none;">
                     <img src="{% get_static_prefix %}QR/{{t.pk}}.jpeg">
+                </div>
+                <div class="optionz" id="stats-view" style="display:none;">
+                    <div id="stats-nc_percent">
+                        NC rate:
+                            {{t.nc_percent}}%
+                    </div>
+                    <div id="stats-last_change">
+                        Last Change:
+                            {{nunum.last_change}}
+                    </div>
+                    <div id="stats-number_count">
+                        # of houses:<br>
+                            {{t.number_count}}
+                    </div>
                 </div>
                 <div id='response' class="good" style="display:none;">
                     <h3>Information Submitted Succesfully</h3>
@@ -159,7 +172,7 @@
                             {{num.visit3}}
                         </td>
                         <td id="visit-note">
-                            {{num.notes}}
+                            {{num.last_updated}}
                         </td>
                     </tr>
                     {% endfor %}

@@ -17,3 +17,10 @@ class CreateForm(forms.Form):
 class UserLoginForm(forms.Form):
     username = forms.CharField(max_length=50)
     password = forms.CharField(widget=forms.PasswordInput)
+
+class CreateUser(forms.Form):
+    first_name = forms.CharField(max_length=50)
+    last_name = forms.CharField(max_length=50)
+    email = forms.EmailField()
+    username = forms.CharField(max_length=50)
+    password = forms.CharField(widget=forms.PasswordInput)

@@ -3,7 +3,7 @@ from django.views import generic
 from django.views.generic import TemplateView, View
 from django.urls import reverse_lazy
 from .models import Terr, Street, Number
-from .forms import VisitForm, CreateForm, UserLoginForm
+from .forms import VisitForm, CreateForm, UserLoginForm, CreateUser
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect, HttpResponseRedirect, render_to_response
 from django.forms import modelformset_factory, inlineformset_factory, formset_factory
 from django.views.decorators.csrf import csrf_exempt
@@ -13,6 +13,8 @@ import qrcode
 import os
 from pathlib import Path
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,12 +23,15 @@ QR_ROOT = os.path.join('main/static/QR/')
 
 
 class UserFormView(View):
-    template_name = 'html/index.html'
+    template_name = 'registration/login.html'
     form_class = UserLoginForm
 
     def get(self, request):
-        form = self.form_class(None)
-        return render(request, self.template_name, {'form': form})
+        if request.user.is_authenticated:
+            return redirect('main:dashboard')
+        else:
+            form = self.form_class(None)
+            return render(request, self.template_name, {'form': form})
 
     def post(self, request):
         form = self.form_class(request.POST)
@@ -36,7 +41,7 @@ class UserFormView(View):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('main:all')
+                return redirect('main:dashboard')
             else:
                 return render(request, self.template_name, {'form': form, 'code': '1'})
 
@@ -44,6 +49,44 @@ class UserFormView(View):
             return render(request, self.template_name, {'form': form, 'code': '2'})
 
 
+class UserCreateView(View):
+    template_name = 'html/user_create.html'
+    form_class = CreateUser
+
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form':form})
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            user = User()
+            user.first_name = form.cleaned_data['first_name']
+            user.last_name = form.cleaned_data['last_name']
+            user.email = form.cleaned_data['email']
+            user.username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user.set_password(password)
+            user.save()
+
+            return redirect('main:login')
+
+
+class UserDashBoard(View):
+    template_name = 'html/dashboard.html'
+
+    def get(self, request):
+        t = Terr.objects.filter(owner=request.user)
+        return render(request, self.template_name,{'t':t})
+
+
+class Stats(View):
+    template_name = 'html/statistic.html'
+
+    def get(self, request):
+        return render(request, self.template_name,)
+
+
+@login_required
 def all(request):
     terr = Terr.objects.all()
     context = {'t': terr}
@@ -66,6 +109,7 @@ def create_post(request, pk, streetpk):
         try:
             for num in result:
                 if len(result[num]) != 0:
+                    selectNumber.last_login = request.user
                     if num == '0':
                         selectNumber.visit1 = result[num]
                         selectNumber.date_worked1 = str(datetime.date.today().strftime('%b %d,%Y'))
@@ -94,11 +138,12 @@ def create_post(request, pk, streetpk):
             content_type="application/json"
         )
 
-
+@login_required
 def detail(request, pk):
     form = VisitForm()
     terr = Terr.objects.get(pk=pk)
     pathtoqr = Path(QR_ROOT+'%s.jpeg' % pk)
+    nunum = Number.objects.filter(street__terr=pk).order_by('-last_updated').first()
     if pathtoqr.is_file():
         pass
     else:
@@ -116,11 +161,11 @@ def detail(request, pk):
         img.save(final)
     if terr.street_set.all():
         terr = get_object_or_404(Terr, pk=pk)
-        return render(request, 'html/details.html', {'t': terr, 'form': form})
+        return render(request, 'html/details.html', {'t': terr, 'form': form, 'nunum':nunum})
     else:
         return render(request, 'html/details.html', {'t': terr})
 
-
+@login_required
 def streetdeets(request, pk, streetpk):
     street = Street.objects.get(pk=streetpk)
     form = VisitForm()
@@ -161,6 +206,7 @@ def addstreet(request, pk):
         selected_terr = Terr.objects.get(pk=pk)
         for new in func:
             newnew = Street()
+            newnew.last_login = request.user
             newnew.name = new
             newnew.date_worked = datetime.datetime.now()
             newnew.terr = selected_terr
@@ -180,6 +226,7 @@ def addnumber(request, pk, streetpk):
         for new in func:
             print(new)
             newnewnum = Number()
+            newnewnum.last_login = request.user
             newnewnum.value = new
             newnewnum.street = selected_street
             newnewnum.save()
@@ -187,23 +234,3 @@ def addnumber(request, pk, streetpk):
             json.dumps({"workesd": "ayeeeeee", "lol": 'lol'}),
             content_type="application/json"
         )
-
-
-def create_terr(request):
-    if request.method == 'POST':
-        print(request.POST)
-        form = CreateForm(request.POST)
-        if form.is_valid():
-            obj = Terr()
-            obj.num = form.cleaned_data['num']
-            obj.sub = form.cleaned_data['sub']
-            obj.owner = form.cleaned_data['owner']
-            obj.lat_cordinate = form.cleaned_data['lat_cordinate']
-            obj.long_cordinate = form.cleaned_data['long_cordinate']
-            obj.save()
-            print('cappichi')
-        return render(request, 'main/terr_form.html', {'form': form})
-
-    else:
-        form = CreateForm()
-        return render(request, 'main/terr_form.html', {'form': form})

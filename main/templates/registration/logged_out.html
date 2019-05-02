@@ -1,18 +1,16 @@
 {% extends 'base.html' %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>JTMS</title>
+    <title>Document</title>
 </head>
-
 <body>
     {% block body %}
-    <h1>dont have anything here yet</h1>
+        <p>logged out</p>
+        <a href="{% url 'login' %}">click here to come back</a>
     {% endblock body %}
 </body>
-
 </html>

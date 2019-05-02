@@ -6,18 +6,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>JTMS</title>
+    <title>TA</title>
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
-        <script src="{% static 'js/details.js' %}"></script>
+    <script src="{% static 'js/details.js' %}"></script>
 
 </head>
 
 <body>
     <div id="base-container">
-        <h1><a href="/all"> Territory Management System</a></h1>
+        <h1 id="header"><a href="/all"> Territory Assistant</a></h1>
+        {% if user.is_authenticated %}
+        <h1 id="more"><a href="#">...</a></h1>
+        <div id="pulldown" style="display: none;">
+            <ul>
+                <li>
+                    <a href="{% url 'main:dashboard' %}">Dashboard</a>
+                </li>
+                <li>
+                    <a href="{% url 'logout' %}">Logout</a>
+                </li>
+
+            </ul>
+        </div>
+        {% endif %}
     </div>
+
     {% block body %}
     {% endblock body %}
 

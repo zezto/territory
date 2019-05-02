@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JTMS</title>
+</head>
+
+<body>
+    {% block body %}
+    <div id="og">
+        {% if code == '1' %}
+        <div id="login-incorrect">
+            <h3>Login Was incorrect or failed, Try again</h3>
+        </div>
+        {% elif code == '2' %}
+        <div id="login-error">
+            <h3>Some error happened along the way try again</h3>
+        </div>
+        {% endif %}
+        <div id="login-box">
+            <form method="post">
+                {% csrf_token %}
+                <h3>Username:</h3>
+                {{form.username}}
+                <br>
+                <h3>Password:</h3>
+                {{form.password}}
+                <br>
+                <button type="submit" id="submit-form">Submit</button>
+            </form>
+        </div>
+        <div id="login-form-error">
+            {% if form.errors %}
+            <p>Your username and password didn't match. Please try again.</p>
+            {% endif %}
+        </div>
+
+        <a id="no-acc" href="{% url 'main:create-acc' %}">Create Account</a>
+    </div>
+    {% endblock body %}
+</body>
+
+</html>
